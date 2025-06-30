@@ -1,2 +1,9 @@
 # MW-drag-to-upload
-Mediawiki widget for allowing drag-to-upload files.
+
+> Mediawiki gadget for allowing drag-to-upload files.
+
+```js
+mw.loader.load(
+  "https://cdn.jsdelivr.net/gh/XYY-huijiwiki/MW-drag-to-upload@dist/index.umd.js"
+);
+```
