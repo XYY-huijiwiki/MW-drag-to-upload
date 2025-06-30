@@ -26,7 +26,8 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, "src/main.ts"),
       name: "MWDragToUpload",
-      fileName: "index",
+      fileName: (format) => `index.${format}.js`,
+      formats: ["umd"],
     },
   },
   define: {
