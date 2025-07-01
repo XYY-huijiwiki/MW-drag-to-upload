@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import { readFileSync } from "node:fs";
+import { fileURLToPath, URL } from "node:url";
 import tailwindcss from "@tailwindcss/vite";
 import vue from "@vitejs/plugin-vue";
 import Components from "unplugin-vue-components/vite";
@@ -12,8 +13,15 @@ const packageJson = JSON.parse(
 
 // https://vite.dev/config/
 export default defineConfig({
+  resolve: {
+    alias: {
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
+    },
+  },
   plugins: [
-    Components({ resolvers: [NaiveUiResolver()] }),
+    Components({
+      resolvers: [NaiveUiResolver()],
+    }),
     tailwindcss(),
     cssInjectedByJsPlugin(),
     vue(),

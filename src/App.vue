@@ -74,6 +74,7 @@ const { isOverDropZone } = useDropZone(document, {
 });
 watch(isOverDropZone, (val) => {
   if (val) {
+    // When files are dragged in, show the modal
     showModal.value = true;
   }
 });
@@ -192,7 +193,7 @@ const syncFilename = debounce(syncFilenameUndebounced, 500);
     inline-theme-disabled
   >
     <n-modal-provider>
-      <n-modal v-model:show="showModal" @close="">
+      <n-modal v-model:show="showModal">
         <n-card
           style="width: 600px"
           :title="t('modal.title')"
@@ -200,13 +201,22 @@ const syncFilename = debounce(syncFilenameUndebounced, 500);
           role="dialog"
           aria-modal="true"
         >
+          <!-- close button -->
+          <template #header-extra>
+            <n-button @click="showModal = false" circle quaternary>
+              <template #icon>
+                <dismiss-24-regular />
+              </template>
+            </n-button>
+          </template>
+
           <!-- upload prompt -->
-          <div class="mt-2" v-show="isOverDropZone">
+          <drop-zone v-show="isOverDropZone || files.length === 0">
             {{ t("modal.dropPrompt") }}
-          </div>
+          </drop-zone>
 
           <!-- upload list -->
-          <div v-show="!isOverDropZone">
+          <div v-show="!(isOverDropZone || files.length === 0)">
             <template v-for="(file, idx) in files" :key="file.filename">
               <n-divider v-if="idx > 0"></n-divider>
               <n-flex :wrap="false">

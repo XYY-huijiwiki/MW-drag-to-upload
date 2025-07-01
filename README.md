@@ -10,7 +10,6 @@ mw.loader.load(
 
 <!--
 todo: add user friendly error messages
-todo: more intuitive drop in area
 todo: plugin system
   - pack similar images
 -->

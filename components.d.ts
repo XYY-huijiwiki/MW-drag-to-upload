@@ -8,12 +8,16 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    Dismiss24Regular: typeof import('./src/components/icons/Dismiss24Regular.vue')['default']
+    DropZone: typeof import('./src/components/DropZone.vue')['default']
+    FluentDismiss24Regular: typeof import('~icons/fluent/dismiss24-regular')['default']
     NButton: typeof import('naive-ui')['NButton']
     NCard: typeof import('naive-ui')['NCard']
     NConfigProvider: typeof import('naive-ui')['NConfigProvider']
     NDivider: typeof import('naive-ui')['NDivider']
     NDynamicTags: typeof import('naive-ui')['NDynamicTags']
     NEl: typeof import('naive-ui')['NEl']
+    NElement: typeof import('naive-ui')['NElement']
     NFlex: typeof import('naive-ui')['NFlex']
     NFormItem: typeof import('naive-ui')['NFormItem']
     NInput: typeof import('naive-ui')['NInput']
