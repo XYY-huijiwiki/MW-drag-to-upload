@@ -21,5 +21,10 @@
   "input.source": "Quelle",
   "input.categories": "Kategorien",
   "btn.uploadWithWarnings": "Dateien hochladen (Warnungen ignorieren)",
-  "btn.upload": "Dateien hochladen"
+  "btn.upload": "Dateien hochladen",
+  "similar-images-prompt": {
+    "enable-prompt": "Diese Dateinamen scheinen sich zu ähneln. Möchten Sie einen Variantengalerie-Code hinzufügen?",
+    "main-variant": "Hauptvariante",
+    "code-preview": "Code-Vorschau"
+  }
 }

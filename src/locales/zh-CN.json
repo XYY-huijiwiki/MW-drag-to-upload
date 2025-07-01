@@ -21,5 +21,10 @@
   "input.source": "来源",
   "input.categories": "分类",
   "btn.uploadWithWarnings": "上传文件（忽略所有警告）",
-  "btn.upload": "上传文件"
+  "btn.upload": "上传文件",
+  "similar-images-prompt": {
+    "enable-prompt": "这些文件名看起来很相似。您想添加变体图库代码吗？",
+    "main-variant": "主变体",
+    "code-preview": "代码预览"
+  }
 }

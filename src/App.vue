@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { darkTheme, useOsTheme } from "naive-ui";
 import { useDropZone } from "@vueuse/core";
 import { cloneDeep, debounce } from "lodash-es";
 
 import { t } from "@/locales";
 import { uploadFile } from "@/mwApi";
+import generateVariantGallery from "./utils/variantsInterlink";
 
 const osTheme = useOsTheme();
 
@@ -38,6 +39,7 @@ type UploadListItem = {
   thumbUrl: string;
 };
 const files = ref<UploadListItem[]>([]);
+const filenames = computed(() => files.value.map((file) => file.filename));
 
 function removeFile(idx: number) {
   files.value.splice(idx, 1);
@@ -79,10 +81,15 @@ watch(isOverDropZone, (val) => {
   }
 });
 
-function generateText(file: UploadListItem) {
+const enableVariantCode = ref(false);
+const selectedIndex = ref(0);
+function generateText(file: UploadListItem, index: number) {
   return (
-    `{{${file.license}}}\n` +
+    (file.license ? `{{${file.license}}}\n` : "{{合理使用}}\n") +
     (file.source ? `{{文件来源|${file.source}}}\n` : "") +
+    (enableVariantCode.value && index === selectedIndex.value
+      ? `\n${generateVariantGallery(filenames.value, index)}\n`
+      : "") +
     file.categories.map((cat) => `[[分类:${cat}]]`).join("\n")
   );
 }
@@ -138,7 +145,7 @@ async function handleUpload(
     const response = await uploadFile({
       filename: file.filename,
       file: file.file,
-      text: generateText(file),
+      text: generateText(file, idx),
       validateOnly,
       ignoreWarnings,
     });
@@ -212,6 +219,11 @@ const syncFilename = debounce(syncFilenameUndebounced, 500);
 
           <!-- upload list -->
           <div v-show="!(isOverDropZone || files.length === 0)">
+            <similar-images-prompt
+              :filenames="filenames"
+              v-model:enable-variant-code="enableVariantCode"
+              v-model:selected-index="selectedIndex"
+            />
             <template v-for="(file, idx) in files" :key="file.filename">
               <n-divider v-if="idx > 0"></n-divider>
               <n-flex :wrap="false">

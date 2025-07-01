@@ -7,8 +7,3 @@ mw.loader.load(
   "https://cdn.jsdelivr.net/gh/XYY-huijiwiki/MW-drag-to-upload@dist/entry.js"
 );
 ```
-
-<!--
-todo: plugin system
-  - pack similar images
--->

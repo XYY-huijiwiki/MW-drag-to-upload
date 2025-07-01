@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 
-// #region global constants defined in /electron.vite.config.ts
+// #region global constants defined in `/vite.config.ts`
 
 // app info
 declare const __APP_VERSION__: string;

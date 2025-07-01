@@ -14,9 +14,14 @@ let shadowRoot: ShadowRoot | null = null;
 
 function renderPre() {
   if (shadowRoot) {
-    shadowRoot.innerHTML = `<pre style="text-wrap: auto;">${
-      props.content ?? ""
-    }</pre>`;
+    shadowRoot.innerHTML = ""; // Leeren
+    const pre = document.createElement("pre");
+    Object.assign(pre.style, {
+      textWrap: "auto",
+      margin: "0",
+    });
+    pre.textContent = props.content ?? "";
+    shadowRoot.appendChild(pre);
   }
 }
 

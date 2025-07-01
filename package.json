@@ -18,6 +18,7 @@
     "@vueuse/core": "^13.4.0",
     "ky": "^1.8.1",
     "lodash-es": "^4.17.21",
+    "string-algorithms": "^1.0.31",
     "tailwindcss": "^4.1.11",
     "vite-plugin-css-injected-by-js": "^3.5.2",
     "vue": "^3.5.17",
@@ -26,6 +27,7 @@
   "devDependencies": {
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^22.15.34",
+    "@types/string-algorithms": "^1.0.3",
     "@vitejs/plugin-vue": "^6.0.0",
     "@vue/tsconfig": "^0.7.0",
     "naive-ui": "^2.42.0",

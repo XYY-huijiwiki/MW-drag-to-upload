@@ -21,5 +21,10 @@
   "input.source": "來源",
   "input.categories": "分類",
   "btn.uploadWithWarnings": "上傳檔案（忽略所有警告）",
-  "btn.upload": "上傳檔案"
+  "btn.upload": "上傳檔案",
+  "similar-images-prompt": {
+    "enable-prompt": "這些檔名看起來很相似。您想新增變體圖庫代碼嗎？",
+    "main-variant": "主要變體",
+    "code-preview": "程式碼預覽"
+  }
 }
