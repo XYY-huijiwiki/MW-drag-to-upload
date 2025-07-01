@@ -136,4 +136,4 @@ dist
 .pnp.*
 
 # Ignore the auto-generated `components.d.ts` by `unplugin-vue-components`
-src/renderer/components.d.ts
+components.d.ts
