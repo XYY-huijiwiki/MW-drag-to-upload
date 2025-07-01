@@ -2,23 +2,25 @@
 import { ref, watch } from "vue";
 import { darkTheme, useOsTheme } from "naive-ui";
 import { useDropZone } from "@vueuse/core";
-import { uploadFile } from "./mwApi";
 import { cloneDeep, debounce } from "lodash-es";
+
+import { t } from "./locales";
+import { uploadFile } from "./mwApi";
 
 const osTheme = useOsTheme();
 
 type Licenses = "合理使用" | "已获授权" | "公有领域";
 const licenceOptions = [
   {
-    label: "合理使用（这个文件受到著作权保护，但在羊羊百科属于合理使用）",
+    label: t("license.fairuse"),
     value: "合理使用",
   },
   {
-    label: "已获授权（这个文件受到著作权保护，著作权方已授权羊羊百科使用）",
+    label: t("license.authorized"),
     value: "已获授权",
   },
   {
-    label: "公有领域（这个文件属于公有领域）",
+    label: t("license.publicdomain"),
     value: "公有领域",
   },
 ];
@@ -122,13 +124,13 @@ async function handleUpload(
   if (file.file.size > 10 * 1024 * 1024) {
     file.check = {
       status: "error",
-      content: "Datei ist zu groß (max. 10 MB).",
+      content: t("error.tooLarge"),
     };
     return;
   }
   file.check = {
     status: "loading",
-    content: "Prüfe Datei...",
+    content: t("status.checking"),
   };
 
   try {
@@ -143,7 +145,7 @@ async function handleUpload(
       if (response.upload.result === "Success") {
         file.check = {
           status: validateOnly ? "ready" : "uploaded",
-          content: "Datei ist gültig.",
+          content: t("status.valid"),
         };
       } else if (response.upload.result === "Warning") {
         file.check = {
@@ -153,19 +155,19 @@ async function handleUpload(
       } else {
         file.check = {
           status: "error",
-          content: "Unbekannter Upload-Status",
+          content: t("error.unknownUploadStatus"),
         };
       }
     } else {
       file.check = {
         status: "error",
-        content: response.error.code || "Unbekannter Fehler",
+        content: response.error.code || t("error.unknown"),
       };
     }
   } catch (error: unknown) {
     file.check = {
       status: "error",
-      content: String(error) || "Unbekannter Fehler",
+      content: String(error) || t("error.unknown"),
     };
     throw error;
   }
@@ -193,14 +195,14 @@ const syncFilename = debounce(syncFilenameUndebounced, 500);
       <n-modal v-model:show="showModal" @close="">
         <n-card
           style="width: 600px"
-          title="Datei-Upload bestätigen"
+          :title="t('modal.title')"
           :bordered="false"
           role="dialog"
           aria-modal="true"
         >
           <!-- upload prompt -->
           <div class="mt-2" v-show="isOverDropZone">
-            Bitte ziehen Sie die Dateien hierher, um sie hochzuladen.
+            {{ t("modal.dropPrompt") }}
           </div>
 
           <!-- upload list -->
@@ -215,7 +217,7 @@ const syncFilename = debounce(syncFilenameUndebounced, 500);
                       <div>
                         <img
                           :src="file.thumbUrl"
-                          alt="Vorschaubild"
+                          :alt="t('img.alt')"
                           class="w-32 h-32 object-contain bg-black rounded"
                           :class="{
                             'ring-red-500 ring-2':
@@ -229,14 +231,14 @@ const syncFilename = debounce(syncFilenameUndebounced, 500);
                         >
                           {{
                             file.check.status === "loading"
-                              ? "🤔 Prüfe..."
+                              ? `🤔 ${t("status.checking")}`
                               : file.check.status === "ready"
-                              ? "👍🏼 Bereit"
+                              ? `👍🏼 ${t("status.ready")}`
                               : file.check.status === "uploaded"
-                              ? "✅ Hochgeladen"
+                              ? `✅ ${t("status.uploaded")}`
                               : file.check.status === "warning"
-                              ? "⚠️ Warnung"
-                              : "❌ Fehler"
+                              ? `⚠️ ${t("status.warning")}`
+                              : `❌ ${t("status.error")}`
                           }}
                         </n-el>
                       </div>
@@ -249,7 +251,7 @@ const syncFilename = debounce(syncFilenameUndebounced, 500);
                 <n-flex vertical class="w-full">
                   <n-flex>
                     <n-input
-                      placeholder="Dateiname"
+                      :placeholder="t('input.filename')"
                       :default-value="file.filename"
                       @input="(v) => syncFilename(v, idx)"
                       size="small"
@@ -262,14 +264,14 @@ const syncFilename = debounce(syncFilenameUndebounced, 500);
                       tertiary
                       @click="removeFile(idx)"
                     >
-                      Entfernen
+                      {{ t("btn.remove") }}
                     </n-button>
                   </n-flex>
                   <n-flex>
                     <n-select
                       size="small"
                       class="flex-1 w-0"
-                      placeholder="Lizenz auswählen"
+                      :placeholder="t('input.license')"
                       :options="licenceOptions"
                       v-model:value="file.license"
                     ></n-select>
@@ -282,13 +284,13 @@ const syncFilename = debounce(syncFilenameUndebounced, 500);
                         applyToAll({ type: 'license', value: file.license })
                       "
                     >
-                      Auf alle anwenden
+                      {{ t("btn.applyAll") }}
                     </n-button>
                   </n-flex>
                   <n-flex>
                     <n-input
                       class="flex-1 w-0"
-                      placeholder="Quelle der Datei (z.B. Webseite, Buch)"
+                      :placeholder="t('input.source')"
                       v-model:value="file.source"
                       size="small"
                       maxlength="255"
@@ -302,13 +304,13 @@ const syncFilename = debounce(syncFilenameUndebounced, 500);
                         applyToAll({ type: 'source', value: file.source })
                       "
                     >
-                      Auf alle anwenden
+                      {{ t("btn.applyAll") }}
                     </n-button>
                   </n-flex>
                   <n-flex>
                     <n-form-item
                       feedback-class="hidden"
-                      label="Kategorien"
+                      :label="t('input.categories')"
                       class="flex-1 w-0"
                       size="small"
                       label-placement="left"
@@ -328,7 +330,7 @@ const syncFilename = debounce(syncFilenameUndebounced, 500);
                         })
                       "
                     >
-                      Auf alle anwenden
+                      {{ t("btn.applyAll") }}
                     </n-button>
                   </n-flex>
                 </n-flex>
@@ -339,11 +341,11 @@ const syncFilename = debounce(syncFilenameUndebounced, 500);
             <n-flex justify="end">
               <!-- force upload -->
               <n-button type="warning" @click="uploadAll(true)">
-                Hochladen (mit Warnungen ignorieren)
+                {{ t("btn.uploadWithWarnings") }}
               </n-button>
               <!-- normal upload -->
               <n-button type="primary" @click="uploadAll()">
-                Hochladen
+                {{ t("btn.upload") }}
               </n-button>
             </n-flex>
           </template>
