@@ -9,7 +9,6 @@ mw.loader.load(
 ```
 
 <!--
-todo: add user friendly error messages
 todo: plugin system
   - pack similar images
 -->

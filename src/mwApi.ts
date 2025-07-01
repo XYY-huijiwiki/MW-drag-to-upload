@@ -1,5 +1,56 @@
 import ky from "ky";
 
+type UploadError = {
+  error:
+    | UploadErrorFileTypeBanned
+    | UploadErrorVerificationError
+    | UploadErrorOther;
+};
+type UploadErrorFileTypeBanned = {
+  code: "filetype-banned";
+  info: string;
+  filetype: string;
+  allowed: string[];
+  "*": string;
+};
+type UploadErrorVerificationError = {
+  code: "verification-error";
+  info: string;
+  details: string[];
+  "*": string;
+};
+type UploadErrorOther = {
+  code: string;
+  info: string;
+};
+type UploadWarnings = {
+  upload: {
+    result: "Warning";
+    warnings: {
+      exists?: string;
+      "exists-normalized"?: string;
+      duplicate?: string[];
+      ["duplicate-archive"]?: string;
+      ["badfilename"]?: string;
+      [key: string]: unknown | undefined;
+    };
+    filekey: string;
+    sessionkey?: string;
+  };
+};
+type UploadSuccess = {
+  upload: {
+    result: "Success";
+    filename: string;
+    imageinfo: {
+      url: string;
+      descriptionurl: string;
+      tags?: string[];
+    };
+    filekey?: string;
+  };
+};
+
 // MediaWiki API: Datei-Hochladen
 type UploadFileOptions = {
   filename: string;
@@ -9,39 +60,7 @@ type UploadFileOptions = {
   ignoreWarnings?: boolean;
   validateOnly?: boolean;
 };
-type UploadApiResponse =
-  | {
-      upload: {
-        result: "Success";
-        filename: string;
-        imageinfo: {
-          url: string;
-          descriptionurl: string;
-          tags?: string[];
-        };
-        filekey?: string;
-      };
-    }
-  | {
-      upload: {
-        result: "Warning";
-        warnings: {
-          exists?: string;
-          duplicate?: string;
-          ["duplicate-archive"]?: string;
-          ["badfilename"]?: string;
-          [key: string]: string | undefined;
-        };
-        filekey: string;
-        sessionkey?: string;
-      };
-    }
-  | {
-      error: {
-        code: string;
-        info: string;
-      };
-    };
+type UploadApiResponse = UploadSuccess | UploadWarnings | UploadError;
 
 async function uploadFile(options: UploadFileOptions) {
   const api = new mw.Api();
@@ -68,3 +87,4 @@ async function uploadFile(options: UploadFileOptions) {
 }
 
 export { uploadFile };
+export type { UploadSuccess, UploadWarnings, UploadError };

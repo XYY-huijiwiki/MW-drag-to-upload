@@ -8,8 +8,11 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    CodeBlock: typeof import('./src/components/CodeBlock.vue')['default']
+    copy: typeof import('./src/components/WarningsDisplay copy.vue')['default']
     Dismiss24Regular: typeof import('./src/components/icons/Dismiss24Regular.vue')['default']
     DropZone: typeof import('./src/components/DropZone.vue')['default']
+    ErrorsDisplay: typeof import('./src/components/ErrorsDisplay.vue')['default']
     FluentDismiss24Regular: typeof import('~icons/fluent/dismiss24-regular')['default']
     NButton: typeof import('naive-ui')['NButton']
     NCard: typeof import('naive-ui')['NCard']
@@ -23,7 +26,10 @@ declare module 'vue' {
     NInput: typeof import('naive-ui')['NInput']
     NModal: typeof import('naive-ui')['NModal']
     NModalProvider: typeof import('naive-ui')['NModalProvider']
+    NScrollbar: typeof import('naive-ui')['NScrollbar']
     NSelect: typeof import('naive-ui')['NSelect']
     NTooltip: typeof import('naive-ui')['NTooltip']
+    ShadowPre: typeof import('./src/components/ShadowPre.vue')['default']
+    WarningsDisplay: typeof import('./src/components/WarningsDisplay.vue')['default']
   }
 }

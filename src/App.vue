@@ -4,8 +4,8 @@ import { darkTheme, useOsTheme } from "naive-ui";
 import { useDropZone } from "@vueuse/core";
 import { cloneDeep, debounce } from "lodash-es";
 
-import { t } from "./locales";
-import { uploadFile } from "./mwApi";
+import { t } from "@/locales";
+import { uploadFile } from "@/mwApi";
 
 const osTheme = useOsTheme();
 
@@ -65,7 +65,7 @@ async function onDrop(f: File[] | null) {
   );
   for (let index = 0; index < newFiles.length; index++) {
     files.value.push(newFiles[index]);
-    await handleUpload(index, true);
+    await handleUpload(files.value.length - 1, true);
   }
 }
 const { isOverDropZone } = useDropZone(document, {
@@ -146,23 +146,18 @@ async function handleUpload(
       if (response.upload.result === "Success") {
         file.check = {
           status: validateOnly ? "ready" : "uploaded",
-          content: t("status.valid"),
+          content: "",
         };
       } else if (response.upload.result === "Warning") {
         file.check = {
           status: "warning",
-          content: Object.keys(response.upload.warnings).join(", "),
-        };
-      } else {
-        file.check = {
-          status: "error",
-          content: t("error.unknownUploadStatus"),
+          content: JSON.stringify(response.upload.warnings, null, 2),
         };
       }
     } else {
       file.check = {
         status: "error",
-        content: response.error.code || t("error.unknown"),
+        content: JSON.stringify(response, null, 2),
       };
     }
   } catch (error: unknown) {
@@ -222,7 +217,7 @@ const syncFilename = debounce(syncFilenameUndebounced, 500);
               <n-flex :wrap="false">
                 <!-- thumb -->
                 <div class="relative flex-none w-32 h-32">
-                  <n-tooltip :delay="0">
+                  <n-tooltip :delay="0" display-directive="show">
                     <template #trigger>
                       <div>
                         <img
@@ -254,7 +249,14 @@ const syncFilename = debounce(syncFilenameUndebounced, 500);
                       </div>
                     </template>
                     <template #default>
-                      {{ file.check.content }}
+                      <template
+                        v-if="['warning', 'error'].includes(file.check.status)"
+                      >
+                        <shadow-pre :content="file.check.content" />
+                      </template>
+                      <template v-else>
+                        {{ file.check.content }}
+                      </template>
                     </template>
                   </n-tooltip>
                 </div>
