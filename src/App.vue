@@ -278,7 +278,7 @@ const syncFilename = debounce(syncFilenameUndebounced, 500);
                     <n-input
                       :placeholder="t('input.filename')"
                       :default-value="file.filename"
-                      @input="(v) => syncFilename(v, idx)"
+                      @input="(v: string) => syncFilename(v, idx)"
                       size="small"
                       maxlength="255"
                       class="flex-1 w-0"
