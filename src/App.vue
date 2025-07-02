@@ -72,6 +72,7 @@ async function onDrop(f: File[] | null) {
 }
 const { isOverDropZone } = useDropZone(document, {
   onDrop,
+  dataTypes: ["image/png", "image/jpeg", "image/gif", "image/webp"],
   preventDefaultForUnhandled: false,
 });
 watch(isOverDropZone, (val) => {
