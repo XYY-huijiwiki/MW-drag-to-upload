@@ -234,7 +234,13 @@ const syncFilename = debounce(syncFilenameUndebounced, 500);
               <n-flex :wrap="false">
                 <!-- thumb -->
                 <div class="relative flex-none w-32 h-32">
-                  <n-tooltip :delay="0" display-directive="show">
+                  <n-tooltip
+                    :delay="0"
+                    display-directive="show"
+                    :disabled="
+                      !['warning', 'error'].includes(file.check.status)
+                    "
+                  >
                     <template #trigger>
                       <div>
                         <img
@@ -266,14 +272,7 @@ const syncFilename = debounce(syncFilenameUndebounced, 500);
                       </div>
                     </template>
                     <template #default>
-                      <template
-                        v-if="['warning', 'error'].includes(file.check.status)"
-                      >
-                        <shadow-pre :content="file.check.content" />
-                      </template>
-                      <template v-else>
-                        {{ file.check.content }}
-                      </template>
+                      <shadow-pre :content="file.check.content" />
                     </template>
                   </n-tooltip>
                 </div>
