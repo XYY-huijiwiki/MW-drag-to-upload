@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.6.1",
+    "@nevware21/ts-utils": "^0.12.5",
     "@tailwindcss/vite": "^4.1.11",
     "@vueuse/core": "^13.4.0",
     "ky": "^1.8.1",

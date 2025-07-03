@@ -10,4 +10,4 @@ mw.loader.load(
 
 > [!important]
 >
-> Due to Safari's security policy, the upload menu shows even if the dragged file is not an image file.
+> Due to Safari's security policy, the upload menu shows even if the dragged file is not an image file. So Safari users should not enable this gadget.
