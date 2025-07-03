@@ -121,6 +121,18 @@ function applyToAll({ type, value }: ApplyToAllOptions) {
 }
 
 const loading = ref(false);
+const debouncedLoading = ref(false);
+const loadingDebouncer = debounce((val: boolean) => {
+  debouncedLoading.value = val;
+}, 500);
+watch(loading, (newValue) => {
+  if (newValue) {
+    loadingDebouncer.cancel();
+    debouncedLoading.value = true;
+  } else {
+    loadingDebouncer(false);
+  }
+});
 async function handleUpload(
   idx: number,
   validateOnly = false,
@@ -370,13 +382,17 @@ const syncFilename = debounce(syncFilenameUndebounced, 500);
               <!-- force upload -->
               <n-button
                 type="warning"
-                :loading="loading"
+                :loading="debouncedLoading"
                 @click="uploadAll(true)"
               >
                 {{ t("btn.uploadWithWarnings") }}
               </n-button>
               <!-- normal upload -->
-              <n-button type="primary" :loading="loading" @click="uploadAll()">
+              <n-button
+                type="primary"
+                :loading="debouncedLoading"
+                @click="uploadAll()"
+              >
                 {{ t("btn.upload") }}
               </n-button>
             </n-flex>
