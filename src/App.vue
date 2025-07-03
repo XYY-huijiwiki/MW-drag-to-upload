@@ -120,11 +120,13 @@ function applyToAll({ type, value }: ApplyToAllOptions) {
   });
 }
 
+const loading = ref(false);
 async function handleUpload(
   idx: number,
   validateOnly = false,
   ignoreWarnings = false
 ) {
+  loading.value = true;
   const file = files.value[idx];
   if (file.check.status === "uploaded") {
     // already uploaded
@@ -174,6 +176,8 @@ async function handleUpload(
       content: String(error) || t("error.unknown"),
     };
     throw error;
+  } finally {
+    loading.value = false;
   }
 }
 
@@ -365,11 +369,15 @@ const syncFilename = debounce(syncFilenameUndebounced, 500);
           <template #footer>
             <n-flex justify="end">
               <!-- force upload -->
-              <n-button type="warning" @click="uploadAll(true)">
+              <n-button
+                type="warning"
+                :loading="loading"
+                @click="uploadAll(true)"
+              >
                 {{ t("btn.uploadWithWarnings") }}
               </n-button>
               <!-- normal upload -->
-              <n-button type="primary" @click="uploadAll()">
+              <n-button type="primary" :loading="loading" @click="uploadAll()">
                 {{ t("btn.upload") }}
               </n-button>
             </n-flex>
