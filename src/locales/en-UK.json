@@ -1,14 +1,14 @@
 {
-  "license.fairuse": "Fair use (this file is copyright protected, but allowed on YangYangWiki as fair use)",
-  "license.authorized": "Authorised (this file is copyright protected, but the copyright holder has authorised YangYangWiki to use it)",
-  "license.publicdomain": "Public domain (this file is in the public domain)",
-  "error.tooLarge": "File is too large (max. 10 MB).",
+  "license.fairuse": "Fair use (protected by copyright, but permitted on YangYangWiki under fair use exceptions)",
+  "license.authorized": "Authorised (protected by copyright, but rights holder has authorised YangYangWiki use)",
+  "license.publicdomain": "Public domain (this file has no copyright restrictions)",
+  "error.tooLarge": "File too large (max. 10 MB)",
   "status.checking": "Checking file...",
-  "status.valid": "File is valid.",
+  "status.valid": "File valid",
   "error.unknownUploadStatus": "Unknown upload status",
   "error.unknown": "Unknown error",
   "modal.title": "Confirm file upload",
-  "modal.dropPrompt": "Please drag files here to upload them.",
+  "modal.dropPrompt": "Drag files here to upload",
   "img.alt": "Preview image",
   "status.ready": "Ready",
   "status.uploaded": "Uploaded",
@@ -20,11 +20,12 @@
   "btn.applyAll": "Apply to all",
   "input.source": "Source",
   "input.categories": "Categories",
-  "btn.uploadWithWarnings": "Upload files (ignore any warnings)",
+  "btn.uploadWithWarnings": "Upload files (ignore warnings)",
   "btn.upload": "Upload files",
   "similar-images-prompt": {
-    "enable-prompt": "These filenames appear to be similar. Would you like to add a variant gallery code?",
-    "main-variant": "Primary variant",
-    "code-preview": "Preview code"
-  }
+    "enable-prompt": "These filenames look similar. Add variant gallery code?",
+    "main-variant": "Main variant",
+    "code-preview": "Code preview"
+  },
+  "safariWarning": "Safari restricts file dragging. Safari users should avoid enabling this gadget."
 }
