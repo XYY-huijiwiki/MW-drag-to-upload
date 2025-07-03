@@ -196,7 +196,7 @@ const syncFilename = debounce(syncFilenameUndebounced, 500);
     inline-theme-disabled
   >
     <n-modal-provider>
-      <n-modal v-model:show="showModal">
+      <n-modal v-model:show="showModal" display-directive="show">
         <n-card
           style="width: 600px"
           :title="t('modal.title')"
