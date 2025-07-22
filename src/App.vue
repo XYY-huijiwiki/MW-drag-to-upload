@@ -10,8 +10,12 @@ import generateVariantGallery from "./utils/variantsInterlink";
 
 const osTheme = useOsTheme();
 
-type Licenses = "合理使用" | "已获授权" | "公有领域";
+type Licenses = "动画截图" | "合理使用" | "已获授权" | "公有领域";
 const licenceOptions = [
+  {
+    label: t("license.animationscreenshot"),
+    value: "动画截图",
+  },
   {
     label: t("license.fairuse"),
     value: "合理使用",
