@@ -12,31 +12,36 @@ const packageJson = JSON.parse(
 );
 
 // https://vite.dev/config/
-export default defineConfig({
-  resolve: {
-    alias: {
-      "@": fileURLToPath(new URL("./src", import.meta.url)),
+export default defineConfig(({ mode }) => {
+  return {
+    resolve: {
+      alias: {
+        "@": fileURLToPath(new URL("./src", import.meta.url)),
+      },
     },
-  },
-  plugins: [
-    Components({
-      resolvers: [NaiveUiResolver()],
-    }),
-    tailwindcss(),
-    cssInjectedByJsPlugin(),
-    vue(),
-  ],
-  build: {
-    manifest: true, // Manifest-Datei für die Produktion erstellen
-  },
-  server: {
-    cors: true, // CORS für lokale Entwicklung aktivieren
-  },
-  define: {
-    __APP_ID__: JSON.stringify("d2c8673e-a0ad-4aae-b7b8-9904cdea1501"),
-    __APP_VERSION__: JSON.stringify(packageJson.version),
-    __APP_HOMEPAGE__: JSON.stringify(packageJson.homepage),
-    __APP_BUILD_DATE__: JSON.stringify(Date.now()),
-  },
-  base: "https://cdn.jsdelivr.net/gh/XYY-huijiwiki/MW-drag-to-upload@dist/",
+    plugins: [
+      Components({
+        resolvers: [NaiveUiResolver()],
+      }),
+      tailwindcss(),
+      cssInjectedByJsPlugin(),
+      vue(),
+    ],
+    build: {
+      manifest: true, // Manifest-Datei für die Produktion erstellen
+    },
+    server: {
+      cors: true, // CORS für lokale Entwicklung aktivieren
+    },
+    define: {
+      __APP_ID__: JSON.stringify("d2c8673e-a0ad-4aae-b7b8-9904cdea1501"),
+      __APP_VERSION__: JSON.stringify(packageJson.version),
+      __APP_HOMEPAGE__: JSON.stringify(packageJson.homepage),
+      __APP_BUILD_DATE__: JSON.stringify(Date.now()),
+    },
+    base:
+      mode === "development"
+        ? "/"
+        : "https://cdn.jsdelivr.net/gh/XYY-huijiwiki/MW-drag-to-upload@dist/",
+  };
 });

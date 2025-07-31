@@ -91,7 +91,7 @@ const selectedIndex = ref(0);
 function generateText(file: UploadListItem, index: number) {
   return (
     (file.license ? `{{${file.license}}}\n` : "{{合理使用}}\n") +
-    (file.source ? `{{文件来源|${file.source}}}\n` : "") +
+    (file.source ? `{{文件来源|1=${file.source}}}\n` : "") +
     (enableVariantCode.value && index === selectedIndex.value
       ? `\n${generateVariantGallery(filenames.value, index)}\n`
       : "") +
