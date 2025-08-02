@@ -1,0 +1,52 @@
+{
+  "index.html": {
+    "file": "assets/index-ktxdRjIE.js",
+    "name": "index",
+    "src": "index.html",
+    "isEntry": true,
+    "dynamicImports": [
+      "src/locales/de-DE.json",
+      "src/locales/en-UK.json",
+      "src/locales/en-US.json",
+      "src/locales/zh-CN.json",
+      "src/locales/zh-HK.json",
+      "src/locales/zh-TW.json"
+    ]
+  },
+  "src/locales/de-DE.json": {
+    "file": "assets/de-DE-ZbLfKESL.js",
+    "name": "de-DE",
+    "src": "src/locales/de-DE.json",
+    "isDynamicEntry": true
+  },
+  "src/locales/en-UK.json": {
+    "file": "assets/en-UK-_8Asp_L8.js",
+    "name": "en-UK",
+    "src": "src/locales/en-UK.json",
+    "isDynamicEntry": true
+  },
+  "src/locales/en-US.json": {
+    "file": "assets/en-US-B3bf1njd.js",
+    "name": "en-US",
+    "src": "src/locales/en-US.json",
+    "isDynamicEntry": true
+  },
+  "src/locales/zh-CN.json": {
+    "file": "assets/zh-CN-BSFhScoO.js",
+    "name": "zh-CN",
+    "src": "src/locales/zh-CN.json",
+    "isDynamicEntry": true
+  },
+  "src/locales/zh-HK.json": {
+    "file": "assets/zh-HK-CTdJCAlp.js",
+    "name": "zh-HK",
+    "src": "src/locales/zh-HK.json",
+    "isDynamicEntry": true
+  },
+  "src/locales/zh-TW.json": {
+    "file": "assets/zh-TW-B8Ywwzt6.js",
+    "name": "zh-TW",
+    "src": "src/locales/zh-TW.json",
+    "isDynamicEntry": true
+  }
+}
