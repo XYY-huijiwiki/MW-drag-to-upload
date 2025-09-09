@@ -10,11 +10,15 @@ import generateVariantGallery from "./utils/variantsInterlink";
 
 const osTheme = useOsTheme();
 
-type Licenses = "动画截图" | "合理使用" | "已获授权" | "公有领域";
+type Licenses = "动画截图" | "人工智能" | "合理使用" | "已获授权" | "公有领域";
 const licenceOptions = [
   {
     label: t("license.animationscreenshot"),
     value: "动画截图",
+  },
+  {
+    label: t("license.aigc"),
+    value: "人工智能",
   },
   {
     label: t("license.fairuse"),
@@ -31,6 +35,7 @@ const licenceOptions = [
 ];
 
 type UploadListItem = {
+  id: string;
   filename: string;
   file: File;
   categories: string[];
@@ -56,6 +61,7 @@ async function onDrop(f: File[] | null) {
   const newFiles = Array.from(f).map(
     (file) =>
       ({
+        id: crypto.randomUUID(),
         filename: file.name,
         file,
         categories: [],
@@ -208,12 +214,6 @@ async function uploadAll(ignoreWarnings = false) {
     await handleUpload(idx, false, ignoreWarnings);
   }
 }
-
-async function syncFilenameUndebounced(v: string, idx: number) {
-  files.value[idx].filename = v;
-  await handleUpload(idx, true);
-}
-const syncFilename = debounce(syncFilenameUndebounced, 500);
 </script>
 
 <template>
@@ -251,7 +251,7 @@ const syncFilename = debounce(syncFilenameUndebounced, 500);
               v-model:enable-variant-code="enableVariantCode"
               v-model:selected-index="selectedIndex"
             />
-            <template v-for="(file, idx) in files" :key="file.filename">
+            <template v-for="(file, idx) in files" :key="file.id">
               <n-divider v-if="idx > 0"></n-divider>
               <n-flex :wrap="false">
                 <!-- thumb -->
@@ -302,8 +302,8 @@ const syncFilename = debounce(syncFilenameUndebounced, 500);
                   <n-flex>
                     <n-input
                       :placeholder="t('input.filename')"
-                      :default-value="file.filename"
-                      @input="(v: string) => syncFilename(v, idx)"
+                      v-model:value="file.filename"
+                      @input="() => handleUpload(idx, true)"
                       size="small"
                       maxlength="255"
                       class="flex-1 w-0"
